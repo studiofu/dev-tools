@@ -11,24 +11,24 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
       }}>
       <Tabs.Screen
-        name="index"
+        name="base64"
         options={{
-          title: 'Home',
+          title: 'BASE 64',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'logo-buffer' : 'logo-buffer'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="qrcode"
         options={{
-          title: 'Explore',
+          title: 'QR Code',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'qr-code' : 'qr-code-outline'} color={color} />
           ),
         }}
       />

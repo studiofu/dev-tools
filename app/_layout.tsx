@@ -27,6 +27,15 @@ export default function RootLayout() {
   }
 
   return (
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      {/* <Stack.Screen name="base64" options={{ headerShown: false }} />
+      <Stack.Screen name="qrcode" options={{ headerShown: false }} /> */}
+  </Stack>
+  )
+
+  return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

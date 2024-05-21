@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dev-tools",
+    "name": "Dev Tools",
     "slug": "dev-tools",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,9 +17,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.knkira.devtools"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ca5795fc-d401-46c4-ba0f-9832ed453c64"
+      }
     }
   }
 }
