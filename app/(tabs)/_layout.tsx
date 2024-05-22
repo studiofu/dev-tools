@@ -1,9 +1,12 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { TabBarEntypoIcon, TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import {
+ Entypo
+} from "@expo/vector-icons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -29,6 +32,16 @@ export default function TabLayout() {
           title: 'QR Code',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'qr-code' : 'qr-code-outline'} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="clock"
+        options={{
+          title: 'Tomato Clock',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarEntypoIcon name={focused ? 'clock' : 'clock'} color={color} />
           ),
         }}
       />
