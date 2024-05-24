@@ -29,8 +29,7 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="clock" options={{headerShown: false}} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />      
       {/* <Stack.Screen name="base64" options={{ headerShown: false }} />
       <Stack.Screen name="qrcode" options={{ headerShown: false }} /> */}
   </Stack>

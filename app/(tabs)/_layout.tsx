@@ -16,6 +16,13 @@ export default function TabLayout() {
       screenOptions={{
         //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
+        // tabBarItemStyle: {
+        //   height: 84,
+        // },
+        // tabBarStyle: {
+        //   height: 84,
+        // }
+
       }}>
       <Tabs.Screen
         name="base64"
@@ -37,7 +44,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="clock"
+        name="(clock)"
         options={{
           title: 'Tomato Clock',
           tabBarIcon: ({ color, focused }) => (
