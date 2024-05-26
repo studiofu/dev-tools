@@ -13,6 +13,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName='(clock)'
       screenOptions={{
         //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
@@ -24,6 +25,15 @@ export default function TabLayout() {
         // }
 
       }}>
+      <Tabs.Screen
+        name="(clock)"
+        options={{
+          title: 'Tomato Clock',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarEntypoIcon name={focused ? 'clock' : 'clock'} color={color} />
+          ),
+        }}
+      />        
       <Tabs.Screen
         name="base64"
         options={{
@@ -43,15 +53,7 @@ export default function TabLayout() {
         }}
       />
 
-      <Tabs.Screen
-        name="(clock)"
-        options={{
-          title: 'Tomato Clock',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarEntypoIcon name={focused ? 'clock' : 'clock'} color={color} />
-          ),
-        }}
-      />
+
     </Tabs>
   );
 }

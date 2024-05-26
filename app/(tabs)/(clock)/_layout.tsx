@@ -13,6 +13,7 @@ const ClockLayout = () => {
         <Stack.Screen name="create-task" 
           options={{ headerShown: true ,
             title: 'Create Task',
+            presentation: 'modal'
           }} 
         />
       </Stack>

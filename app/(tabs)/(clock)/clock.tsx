@@ -1,89 +1,177 @@
-import { View, ScrollView, StyleSheet, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, ScrollView, StyleSheet, Platform, TouchableOpacity, Pressable } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
-import { useRouter } from 'expo-router'
-import ClockProvider, { useClockContext } from '@/providers/clock-providers'
+import { Link, useRouter } from 'expo-router'
+import ClockProvider, { TimerType, useClockContext } from '@/providers/clock-providers'
 import { Card, Button, Divider, Text } from 'react-native-paper'
+import Modal from "react-native-modal";
+import CustomTomatoButton from '@/components/custom-tomato-button'
+import * as Haptics from 'expo-haptics';
 
+// Reference:
+// https://github.com/react-native-modal/react-native-modal
 
 const ClockPage = () => {
   const router = useRouter();
 
   const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
+  
+  const [isModalVisible, setModalVisible] = useState(false);
+  
+  const timerRef = React.useRef<ReturnType<typeof setInterval>>();
 
   const {
     tasks,
     addTask,
-    removeTask
+    removeTask,
+    timerType,
+    setTimerType,
+    timer,
+    timerColor,
+    startTimer,
+    stopTimer,
+    timerActive
   } = useClockContext();
+
+  // const startTimer = useCallback(() => {
+  //   timerRef.current = setInterval(() => {
+  //     setTimer((state) => state - 1);
+  //   }, 1000);
+  //   return () => clearInterval(timerRef.current);
+  // }, [])
+
+  // const stopTimer = useCallback(() => {
+  //   clearInterval(timerRef.current)
+  // }, [])
+
+  const toDoubleDigit = (num: number) => {
+    return num < 10 ? `0${num}` : num;
+  }
+
+  const getTimerString = (timer: number) => {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+    return `${toDoubleDigit(minutes)}:${toDoubleDigit(seconds)}`;
+  }
+
+
+  const timerString = getTimerString(timer);
 
   useEffect(() => {
     console.log(tasks);
   }, [tasks])
 
+  // #BA4949
+  // #38858A
+  // #397097
+  //console.log(timerColor)
+
   return (
     <>
     <ClockProvider>
-    <SafeAreaView className="bg-primary h-full items-center justify-center">
-      <ScrollView
-        className="bg-primary h-full w-full bg-red-500/30"
-        contentContainerStyle={{ flexGrow: 1, height: '100%'}}
-        showsVerticalScrollIndicator={false}
+    <Modal isVisible={isModalVisible}>
+      <View className='flex justify-center items-center w-full h-full'>
+        <Text className='text-white'>Modal</Text>
+      </View>
+    </Modal>
+    <SafeAreaView >
+      <ScrollView        
+        
+         contentContainerStyle={{flexGrow:1, minHeight:'100%' }}
+        // showsVerticalScrollIndicator={false}
       >
-        <View className='items-center justify-center' 
-        style= {{
-            //minHeight: '100%',
-          }}
-        >
-       
+      <View className={`h-full bg-[${timerColor}]`}>
 
-        <Card className='mt-5 w-full'>
-        <Card.Title title="Card Title" subtitle="Card Subtitle" titleVariant='displaySmall' />
-            {/* <Card.Actions>
-              <Button>Cancel</Button>
-              <Button>Ok</Button>
-            </Card.Actions> */}
-            <Card.Content>
-              <Text variant="displayLarge">Card title</Text>
-              <Text variant="bodyMedium">Card content</Text>
-            </Card.Content>            
-          </Card>          
-        <Text>Coming Soon.</Text>          
+          <View>
+            <Text className='text-white font-bold p-2'>Tomato Clock</Text>
+          </View>
 
-        <Divider className='h-2' theme={{colors: { primary:'green' }}}/>
-        <Text>Mango</Text>
+          <View className='bg-white/20 m-2 p-2 rounded-md pb-5 pt-5'>
+            <View className='flex flex-row gap-2 m-2 p-2 justify-center items-center'>
+              <CustomTomatoButton onPress={()=>{
+                setTimerType(TimerType.Pomodoro)
+              }} isActive={timerType== TimerType.Pomodoro}>
+                  Pomodoro
+              </CustomTomatoButton>
 
-        {/* <Button title='Go Base 64' onPress={
-          () => {router.push("/base64")}
-          }/> */}
+              <CustomTomatoButton onPress={()=>{
+                setTimerType(TimerType.ShortBreak)
+              }} isActive={timerType== TimerType.ShortBreak}>
+                  Short Break
+              </CustomTomatoButton>         
 
-        {/* <Button title='Add Tasks' onPress={
-          () => {
-            //addTask('Task' + Date.now());
-            router.push("/create-task")
-          }
-          }/> */}
+              <CustomTomatoButton onPress={()=>{
+                setTimerType(TimerType.LongBreak)
+              }} isActive={timerType== TimerType.LongBreak}>
+                 Long Break
+              </CustomTomatoButton>                     
+                
+            </View>
+            
+            <View className='flex w-full items-center justify-center pt-5 h-[100px]'>
+              <Text className='text-7xl text-white font-bold'>{timerString}</Text>              
+            </View>
 
-        <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
-            Press me
-        </Button>          
+            <View className='flex w-full items-center pt-5 h-[100px]'>
+              {/* <Button onPress={() => startTimer()}>Start</Button>
+              <Button onPress={() => stopTimer()}>Stop</Button> */}
 
-        <Button 
-          icon="apple-safari"          
-          onPress={()=> {
-            router.push("/create-task")
-          }}
-          className='bg-white/50'>
-          Press me
-        </Button>
+              {!timerActive && ( 
+                <Pressable onPress={()=>{
+                  Haptics.notificationAsync(
+                    Haptics.NotificationFeedbackType.Success
+                  )
+                  startTimer()
+                }}>
+                  <View className='bg-white pl-5 pr-5 pt-1 pb-1 rounded-md '>
+                    <Text className={`text-[${timerColor}] text-3xl font-extrabold`}>START</Text>                  
+                  </View>
+                </Pressable>
+              )}
 
-        </View>        
+              {timerActive && ( 
+              <Pressable onPress={()=>{
+                stopTimer()
+              }}>
+                <View className='bg-white pl-5 pr-5 pt-1 pb-1 rounded-md '>
+                  <Text className={`text-[${timerColor}] text-3xl font-extrabold`}>PAUSE</Text>                  
+                </View>
+              </Pressable>              
+              )}
+
+            </View>
+          </View>
+
+          {/* <View>
+            <View>
+              <Text>Tasks</Text>
+            </View>
+            <View>
+              <Link href="/create-task">Create Task</Link>
+            </View>
+
+            <View>
+              {tasks.map(task => (
+                <Card key={task.id}>
+                  <Card.Title title={task.title} />
+                  <Card.Content>
+                    <Text>{task.count}</Text>
+                  </Card.Content>
+                  <Card.Actions>
+                    <Button onPress={() => removeTask(task.id)}>Remove</Button>
+                  </Card.Actions>
+                </Card>
+              ))}
+            </View>
+          </View> */}
+
+      </View>
       </ScrollView>
 
     </SafeAreaView>
     
-    <StatusBar backgroundColor='#ff9999' style='light'/>
+    <StatusBar backgroundColor={`${timerColor}`} style='light'/>
     </ClockProvider>
     </>
   )
