@@ -59,7 +59,7 @@ const ClockPage = () => {
   const timerString = getTimerString(timer);
 
   useEffect(() => {
-    console.log(tasks);
+    console.log(`tasks`, tasks);
   }, [tasks])
 
   // #BA4949
@@ -68,8 +68,7 @@ const ClockPage = () => {
   //console.log(timerColor)
 
   return (
-    <>
-    <ClockProvider>
+    <>    
     <Modal isVisible={isModalVisible}>
       <View className='flex justify-center items-center w-full h-full'>
         <Text className='text-white'>Modal</Text>
@@ -81,7 +80,11 @@ const ClockPage = () => {
          contentContainerStyle={{flexGrow:1, minHeight:'100%' }}
         // showsVerticalScrollIndicator={false}
       >
-      <View className={`h-full bg-[${timerColor}]`}>
+      <View className={`h-full`} 
+        style={{
+          backgroundColor: `${timerColor}`
+        }}
+      >
 
           <View>
             <Text className='text-white font-bold p-2'>Tomato Clock</Text>
@@ -110,7 +113,9 @@ const ClockPage = () => {
             </View>
             
             <View className='flex w-full items-center justify-center pt-5 h-[100px]'>
-              <Text className='text-7xl text-white font-bold'>{timerString}</Text>              
+              <View className='w-[200px]'>
+                <Text className='text-7xl text-white font-bold'>{timerString}</Text>              
+              </View>
             </View>
 
             <View className='flex w-full items-center pt-5 h-[100px]'>
@@ -125,17 +130,34 @@ const ClockPage = () => {
                   startTimer()
                 }}>
                   <View className='bg-white pl-5 pr-5 pt-1 pb-1 rounded-md '>
-                    <Text className={`text-[${timerColor}] text-3xl font-extrabold`}>START</Text>                  
+                    <Text className={`text-[${timerColor}] text-3xl font-extrabold`}
+                      style={{
+                        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                        textShadowOffset: {width: -1, height: 1},
+                        textShadowRadius: 10,
+                        color: `${timerColor}`
+                      }}
+                    >START</Text>                  
                   </View>
                 </Pressable>
               )}
 
               {timerActive && ( 
               <Pressable onPress={()=>{
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                )
                 stopTimer()
               }}>
                 <View className='bg-white pl-5 pr-5 pt-1 pb-1 rounded-md '>
-                  <Text className={`text-[${timerColor}] text-3xl font-extrabold`}>PAUSE</Text>                  
+                  <Text className={`text-[${timerColor}] text-3xl font-extrabold`}                  
+                    style={{
+                      textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                      textShadowOffset: {width: -1, height: 1},
+                      textShadowRadius: 10,
+                      color: `${timerColor}`
+                    }}                  
+                  >PAUSE</Text>                  
                 </View>
               </Pressable>              
               )}
@@ -171,8 +193,7 @@ const ClockPage = () => {
 
     </SafeAreaView>
     
-    <StatusBar backgroundColor={`${timerColor}`} style='light'/>
-    </ClockProvider>
+    {/* <StatusBar backgroundColor={`${timerColor}`} style='light'/>     */}
     </>
   )
 }

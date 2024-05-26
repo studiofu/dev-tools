@@ -13,8 +13,8 @@ const CustomTomatoButton = (
   const additionalClassname = isActive ? 'bg-black/10' : 'bg-transparent';
   return (
     <TouchableOpacity onPress={onPress}>
-      <View>
-        <Text className={`text-xl font-bold text-white p-2 rounded-md ${additionalClassname}`}>
+      <View className={`${additionalClassname} rounded-md p-2`}>
+        <Text className={`text-xl font-bold text-white`}>
           {children}
         </Text>    
       </View>

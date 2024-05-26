@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
-
+import { Audio} from "expo-av";
 export enum TimerType {
   Pomodoro = 'Pomodoro',
   ShortBreak = 'Short Break',
@@ -48,21 +48,38 @@ const ClockProvider = (
   const [timerActive, setTimerActive] = useState<boolean>(false);
   const timerRef = useRef<ReturnType<typeof setInterval>>();
 
-  useEffect(() => {
+
+  const playSound = async () => {
+    const { sound: playbackObject } = await Audio.Sound.createAsync(
+      require('@/assets/sound/positive-notification-digital-twinkle-betacut-1-00-03.mp3')
+    );
+
+    await playbackObject.playAsync();
+
+  }
+
+
+
+
+  const initialTimer = (timerType: TimerType) => {
     switch(timerType) {
       case TimerType.Pomodoro:
         setTimer(1500);
         setTimerColor('#BA4949');
         break;
       case TimerType.ShortBreak:
-        setTimer(300);
+        setTimer(3);
         setTimerColor('#38858A');
         break;
       case TimerType.LongBreak:
         setTimer(900);
         setTimerColor('#397097');
         break;
-    }
+    }    
+  }
+
+  useEffect(() => {
+    initialTimer(timerType);
   }, [timerType])
 
   const addTask = (title: string, estimatedEffort: number = 0) => {
@@ -80,14 +97,28 @@ const ClockProvider = (
   }
 
   const startTimer = useCallback(() => {
-    if(!timerRef.current) {
+    if (!timerRef.current) {
       setTimerActive(true);
       timerRef.current = setInterval(() => {
-        setTimer((state) => state - 1);
-      }, 1000);  
+        setTimer((state) => {
+          console.log('timer', state);
+          if (state - 1 <= 0) {
+            stopTimer();
+            playSound();
+            // Play sound
+            // const audio = new Audio('@/assets/sound/positive-notification-digital-twinkle-betacut-1-00-03.mp3');
+            // audio.play();
+            // Show notification
+            // Reset
+            console.log('timerType', timerType)
+            initialTimer(timerType);
+          }
+          return state - 1;
+        });
+      }, 1000);
       return () => clearInterval(timerRef.current);
     }
-  }, [])
+  }, []);
 
   const stopTimer = useCallback(() => {
     if(timerRef.current) {
