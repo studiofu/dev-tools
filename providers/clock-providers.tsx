@@ -5,6 +5,7 @@ type Task = {
   id: string;
   title: string;
   isCompleted: boolean;
+  count: number;
 }
 
 interface ClockContextProps {
@@ -33,7 +34,8 @@ const ClockProvider = (
     const newTask = {
       id: String(new Date().getTime()),
       title,
-      isCompleted: false
+      isCompleted: false,
+      count: 0
     }
     setTasks([...tasks, newTask]);
   }

@@ -6,16 +6,20 @@ import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { StatusBar } from 'expo-status-bar'
 
 export default function TabTwoScreen() {
   return (
+    <>
     <SafeAreaView className="bg-primary h-full items-center justify-center">
       
         <View className='items-center justify-center'>
-        <Text>Coming Soon.</Text>          
+          <Text>Coming Soon.</Text>
         </View>
-                
+        
     </SafeAreaView>
+    <StatusBar style='light'/>
+    </>
   );
 }
 
