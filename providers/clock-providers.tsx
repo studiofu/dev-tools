@@ -53,13 +53,9 @@ const ClockProvider = (
     const { sound: playbackObject } = await Audio.Sound.createAsync(
       require('@/assets/sound/positive-notification-digital-twinkle-betacut-1-00-03.mp3')
     );
-
     await playbackObject.playAsync();
-
+    await playbackObject.unloadAsync();
   }
-
-
-
 
   const initialTimer = (timerType: TimerType) => {
     switch(timerType) {
