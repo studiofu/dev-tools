@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, useColorScheme, Pressable } from 'react-native'
+import { View, Text, SafeAreaView, useColorScheme, Pressable, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router'
 import { useTheme } from '@react-navigation/native';
@@ -21,13 +21,13 @@ const IndexPage = () => {
           </Text>
         </CustomTomatoDashButton>
         <Link href="/(tabs)" asChild>
-          <Pressable className='w-full m-2 p-2'>          
+          <TouchableOpacity className='w-full m-2 p-2'>          
           <View className='flex bg-blue-700 rounded-md text-white justify-center items-center text-center m-2 p-5'>
           <Text className='text-white font-bold'>
           CONTINUE
           </Text>          
           </View>
-          </Pressable>
+          </TouchableOpacity>
         </Link>
       </View>
     </SafeAreaView>
