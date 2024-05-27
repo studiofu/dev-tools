@@ -44,7 +44,7 @@ const ClockProvider = (
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [timer, setTimer] = useState<number>(0);
-  const [timerType, setTimerType] = useState<TimerType>(TimerType.LongBreak);
+  const [timerType, setTimerType] = useState<TimerType>(TimerType.Pomodoro);
   const [timerColor, setTimerColor] = useState<string>('#BA4949');
   const [timerActive, setTimerActive] = useState<boolean>(false);
   const [sound, setSound] = useState<Sound | null>(null);

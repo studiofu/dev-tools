@@ -12,9 +12,8 @@ import ClockProvider from '@/providers/clock-providers';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  return (    
+  return (      
     <Tabs
-      initialRouteName='(clock)'
       screenOptions={{
         //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
@@ -24,8 +23,12 @@ export default function TabLayout() {
         // tabBarStyle: {
         //   height: 84,
         // }
+        
 
-      }}>
+      }}>      
+
+      <Tabs.Screen name="index" redirect/>
+
       <Tabs.Screen
         name="(clock)"
         options={{
@@ -36,7 +39,7 @@ export default function TabLayout() {
         }}
       />        
       <Tabs.Screen
-        name="base64"
+        name="base64"        
         options={{
           title: 'BASE 64',
           tabBarIcon: ({ color, focused }) => (
@@ -53,6 +56,7 @@ export default function TabLayout() {
           ),
         }}
       />
+      
 
 
     </Tabs>    

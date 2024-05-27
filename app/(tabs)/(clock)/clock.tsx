@@ -8,6 +8,8 @@ import { Card, Button, Divider, Text } from 'react-native-paper'
 import Modal from "react-native-modal";
 import CustomTomatoButton from '@/components/custom-tomato-button'
 import * as Haptics from 'expo-haptics';
+import CustomTomatoDash from '@/components/custom-tomato-dash-button'
+import CustomTomatoDashButton from '@/components/custom-tomato-dash-button'
 
 // Reference:
 // https://github.com/react-native-modal/react-native-modal
@@ -191,9 +193,13 @@ const ClockPage = () => {
             </View>
           </View> */}
 
-        <View>
-          <Text>{timerType}</Text>
-        </View>
+
+          <View>
+            <CustomTomatoDashButton onPress={() => {}} isActive>
+              Add Task
+            </CustomTomatoDashButton>
+          </View>
+
 
       </View>
       </ScrollView>
