@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { Audio} from "expo-av";
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS} from "expo-av";
+import { Sound } from "expo-av/build/Audio";
 export enum TimerType {
   Pomodoro = 'Pomodoro',
   ShortBreak = 'Short Break',
@@ -46,15 +47,36 @@ const ClockProvider = (
   const [timerType, setTimerType] = useState<TimerType>(TimerType.Pomodoro);
   const [timerColor, setTimerColor] = useState<string>('#BA4949');
   const [timerActive, setTimerActive] = useState<boolean>(false);
+  const [sound, setSound] = useState<Sound | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval>>();
 
+  useEffect(() => {
+    console.log('init sound');
+    Audio.setAudioModeAsync({
+        staysActiveInBackground: true,
+        playsInSilentModeIOS: true,
+        interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+        interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+        shouldDuckAndroid: true,
+        playThroughEarpieceAndroid: true,
+    });
+    return sound
+      ? () => {
+        console.log('clean up sound')
+        sound.unloadAsync();
+      }
+      : undefined;
+  }, [sound]);
 
   const playSound = async () => {
     const { sound: playbackObject } = await Audio.Sound.createAsync(
       require('@/assets/sound/positive-notification-digital-twinkle-betacut-1-00-03.mp3')
     );
+    setSound(playbackObject);    
+
+    //console.log(playbackObject);
     await playbackObject.playAsync();
-    await playbackObject.unloadAsync();
+    //await playbackObject.unloadAsync();
   }
 
   const initialTimer = (timerType: TimerType) => {
@@ -75,6 +97,7 @@ const ClockProvider = (
   }
 
   useEffect(() => {
+    console.log('timerType', timerType)
     initialTimer(timerType);
   }, [timerType])
 
@@ -92,6 +115,7 @@ const ClockProvider = (
     setTasks(tasks.filter(task => task.id !== id));
   }
 
+
   const startTimer = useCallback(() => {
     if (!timerRef.current) {
       setTimerActive(true);
@@ -106,7 +130,7 @@ const ClockProvider = (
             // audio.play();
             // Show notification
             // Reset
-            console.log('timerType', timerType)
+            console.log('time up...timerType', timerType)
             initialTimer(timerType);
           }
           return state - 1;

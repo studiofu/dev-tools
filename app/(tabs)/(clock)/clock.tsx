@@ -113,7 +113,7 @@ const ClockPage = () => {
             </View>
             
             <View className='flex w-full items-center justify-center pt-5 h-[100px]'>
-              <View className='w-[200px]'>
+              <View className='w-[220px]'>
                 <Text className='text-7xl text-white font-bold'>{timerString}</Text>              
               </View>
             </View>
