@@ -7,8 +7,10 @@ import { Slot, Stack } from 'expo-router';
 
 const ClockLayout = () => {
   return (
-    <ClockProvider> 
+    
+    <ClockProvider>
       <Stack>
+        
         <Stack.Screen name="clock" options={{ headerShown: false }} />
         <Stack.Screen name="create-task" 
           options={{ headerShown: true ,
@@ -16,7 +18,8 @@ const ClockLayout = () => {
             presentation: 'modal'
           }} 
         />
-      </Stack>
+        
+      </Stack>      
     </ClockProvider>
   )
 }

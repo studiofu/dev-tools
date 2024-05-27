@@ -7,11 +7,12 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import {
  Entypo
 } from "@expo/vector-icons";
+import ClockProvider from '@/providers/clock-providers';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  return (
+  return (    
     <Tabs
       initialRouteName='(clock)'
       screenOptions={{
@@ -54,6 +55,6 @@ export default function TabLayout() {
       />
 
 
-    </Tabs>
+    </Tabs>    
   );
 }

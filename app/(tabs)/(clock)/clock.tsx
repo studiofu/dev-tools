@@ -26,7 +26,7 @@ const ClockPage = () => {
     addTask,
     removeTask,
     timerType,
-    setTimerType,
+    setTimerTypeWrapper,    
     timer,
     timerColor,
     startTimer,
@@ -58,9 +58,12 @@ const ClockPage = () => {
 
   const timerString = getTimerString(timer);
 
+  
   useEffect(() => {
-    console.log(`tasks`, tasks);
-  }, [tasks])
+    // initial timer
+    console.log('trigger useeffect')
+    setTimerTypeWrapper(timerType);
+  }, [])
 
   // #BA4949
   // #38858A
@@ -93,19 +96,19 @@ const ClockPage = () => {
           <View className='bg-white/20 m-2 p-2 rounded-md pb-5 pt-5'>
             <View className='flex flex-row gap-2 m-2 p-2 justify-center items-center'>
               <CustomTomatoButton onPress={()=>{
-                setTimerType(TimerType.Pomodoro)
+                setTimerTypeWrapper(TimerType.Pomodoro);
               }} isActive={timerType== TimerType.Pomodoro}>
                   Pomodoro
               </CustomTomatoButton>
 
               <CustomTomatoButton onPress={()=>{
-                setTimerType(TimerType.ShortBreak)
+                setTimerTypeWrapper(TimerType.ShortBreak)  
               }} isActive={timerType== TimerType.ShortBreak}>
                   Short Break
               </CustomTomatoButton>         
 
               <CustomTomatoButton onPress={()=>{
-                setTimerType(TimerType.LongBreak)
+                setTimerTypeWrapper(TimerType.LongBreak)
               }} isActive={timerType== TimerType.LongBreak}>
                  Long Break
               </CustomTomatoButton>                     
@@ -187,6 +190,10 @@ const ClockPage = () => {
               ))}
             </View>
           </View> */}
+
+        <View>
+          <Text>{timerType}</Text>
+        </View>
 
       </View>
       </ScrollView>

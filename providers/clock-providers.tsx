@@ -18,7 +18,7 @@ interface ClockContextProps {
   tasks: Task[];
   timer: number;
   timerType: TimerType;
-  setTimerType: (type: TimerType) => void;  
+  setTimerTypeWrapper: (timerType: TimerType) => void;
   addTask: (title: string, estimatedEffort?: number) => void;
   removeTask: (id: string) => void;
   timerColor: string;  
@@ -44,7 +44,7 @@ const ClockProvider = (
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [timer, setTimer] = useState<number>(0);
-  const [timerType, setTimerType] = useState<TimerType>(TimerType.Pomodoro);
+  const [timerType, setTimerType] = useState<TimerType>(TimerType.LongBreak);
   const [timerColor, setTimerColor] = useState<string>('#BA4949');
   const [timerActive, setTimerActive] = useState<boolean>(false);
   const [sound, setSound] = useState<Sound | null>(null);
@@ -53,12 +53,12 @@ const ClockProvider = (
   useEffect(() => {
     console.log('init sound');
     Audio.setAudioModeAsync({
-        staysActiveInBackground: true,
-        playsInSilentModeIOS: true,
-        interruptionModeIOS: InterruptionModeIOS.DuckOthers,
-        interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
-        shouldDuckAndroid: true,
-        playThroughEarpieceAndroid: true,
+        // staysActiveInBackground: true,
+        // playsInSilentModeIOS: true,
+        // interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+        // interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+        // shouldDuckAndroid: true,
+        // playThroughEarpieceAndroid: true,
     });
     return sound
       ? () => {
@@ -97,8 +97,7 @@ const ClockProvider = (
   }
 
   useEffect(() => {
-    console.log('timerType', timerType)
-    initialTimer(timerType);
+    console.log('timerType changed', timerType)    
   }, [timerType])
 
   const addTask = (title: string, estimatedEffort: number = 0) => {
@@ -115,8 +114,13 @@ const ClockProvider = (
     setTasks(tasks.filter(task => task.id !== id));
   }
 
+  const resetTimer = () => {    
+    initialTimer(timerType);
+  }
 
-  const startTimer = useCallback(() => {
+
+  const startTimer = () => {
+    
     if (!timerRef.current) {
       setTimerActive(true);
       timerRef.current = setInterval(() => {
@@ -125,31 +129,30 @@ const ClockProvider = (
           if (state - 1 <= 0) {
             stopTimer();
             playSound();
-            // Play sound
-            // const audio = new Audio('@/assets/sound/positive-notification-digital-twinkle-betacut-1-00-03.mp3');
-            // audio.play();
-            // Show notification
-            // Reset
-            console.log('time up...timerType', timerType)
-            initialTimer(timerType);
-          }
+            resetTimer();
+          }          
           return state - 1;
         });
       }, 1000);
       return () => clearInterval(timerRef.current);
     }
-  }, []);
+  };
 
-  const stopTimer = useCallback(() => {
+  const stopTimer = () => {
     if(timerRef.current) {
       clearInterval(timerRef.current)
       timerRef.current = undefined;
       setTimerActive(false);
     }
+  }
 
-  }, [])
-
-
+  const setTimerTypeWrapper = (t: TimerType) => {
+    console.log('setTimerTypeWrapper', t)
+    setTimerType(t);
+    initialTimer(t);
+    console.log('after set', timerType);
+  };
+  
   return (
     <ClockContext.Provider value={{
       timer, 
@@ -157,7 +160,7 @@ const ClockProvider = (
       addTask,
       removeTask,
       timerType,
-      setTimerType,
+      setTimerTypeWrapper,
       timerColor,
       startTimer,
       stopTimer,
