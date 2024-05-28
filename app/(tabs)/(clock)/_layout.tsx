@@ -1,11 +1,16 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ClockProvider from '@/providers/clock-providers';
 import { Slot, Stack } from 'expo-router';
 
 
 
 const ClockLayout = () => {
+
+  useEffect(() => { 
+    console.log('ClockLayout mounted');
+  }, [])
+
   return (
     
     <ClockProvider>
