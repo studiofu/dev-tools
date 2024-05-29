@@ -12,7 +12,6 @@ const ClockLayout = () => {
   }, [])
 
   return (
-    
     <ClockProvider>
       <Stack>
         
@@ -25,7 +24,7 @@ const ClockLayout = () => {
         /> */}
         
       </Stack>      
-    </ClockProvider>
+    </ClockProvider>    
   )
 }
 

@@ -53,10 +53,7 @@ const IndexPage = () => {
     moveDownPosition.value = 1;
   }, [])
 
-    
-
-
-  
+      
   return (
     <SafeAreaView className='bg-primary h-full'>
       <Animated.View className='flex-1 items-center justify-center'>
@@ -68,15 +65,15 @@ const IndexPage = () => {
 
         <CustomTomatoDashButton onPress={() => {}} isActive>
           <Text className='text-black/50'>
-            Hello, this app contains some tools for developer to use. Please enjoy...
+            Tools, Convenience and Fun.
           </Text>
         </CustomTomatoDashButton>
         </Animated.View>
-        <Animated.View style={[moveDownStyle]}>
+        <Animated.View style={[moveDownStyle]} className="pt-">
           <Link href="/(tabs)" asChild>
             <TouchableOpacity className='w-full'>          
             <View 
-              className='flex bg-blue-700 rounded-md text-white justify-center items-center text-center m-2 p-2 h-16 w-32 shadow-xl shadow-blue-900'
+              className='flex bg-gray-700 rounded-md text-white justify-center items-center text-center m-2 p-2 h-12 w-32 shadow-blue-900 shadow-xl border-b-2 border-r-2 border-red-500'
               >
               <Text className='text-white font-bold'>
                 CONTINUE

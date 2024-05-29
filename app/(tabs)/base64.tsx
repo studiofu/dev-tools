@@ -37,7 +37,9 @@ export default function HomeScreen() {
       >
 
         <View className='flex space-y-1'>
-            <Text className='bg-blue-100 p-2 rounded-sm'>Raw Text</Text>
+            <View className='bg-blue-100 p-2 rounded-lg'>
+              <Text className='text-blue-900'>Raw Text</Text>
+            </View>
             <TextInput value={rawText} className='h-40 p-2 bg-gray-400/20'  multiline={true}
               placeholder='Please input here...'
               onChange={(e) => {                

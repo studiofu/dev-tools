@@ -8,11 +8,13 @@ import {
  Entypo
 } from "@expo/vector-icons";
 import ClockProvider from '@/providers/clock-providers';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (      
+    <RootSiblingParent>
     <Tabs
       screenOptions={{
         //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -20,9 +22,10 @@ export default function TabLayout() {
         // tabBarItemStyle: {
         //   height: 84,
         // },
-        // tabBarStyle: {
-        //   height: 84,
-        // }
+        tabBarStyle: {
+          height: 55,
+          paddingBottom: 5,
+        }        
         
 
       }}>      
@@ -60,5 +63,6 @@ export default function TabLayout() {
 
 
     </Tabs>    
+    </RootSiblingParent>
   );
 }
