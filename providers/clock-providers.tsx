@@ -76,7 +76,10 @@ const ClockProvider = (
           const parsedValue = JSON.parse(value);
           setTasks(parsedValue);
         }
-     });    
+     }).catch((error) => {
+       console.error('AsyncStorage.getItem error', error);
+    })     
+    ;    
   }, []);  
 
   useEffect(() => {
@@ -119,11 +122,11 @@ const ClockProvider = (
   const initialTimer = (timerType: TimerType) => {
     switch(timerType) {
       case TimerType.Pomodoro:
-        setTimer(3);
+        setTimer(1500);
         setTimerColor('#BA4949');
         break;
       case TimerType.ShortBreak:
-        setTimer(3);
+        setTimer(300);
         setTimerColor('#38858A');
         break;
       case TimerType.LongBreak:

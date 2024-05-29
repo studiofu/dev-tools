@@ -2,7 +2,7 @@
   "expo": {
     "name": "Dev Tools",
     "slug": "dev-tools",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.knkira.devtools"
+      "package": "com.knkira.devtools",
+      "versionCode" : 2
     },
     "web": {
       "bundler": "metro",
